@@ -1,17 +1,14 @@
 const btnAgregar = document.querySelector('#newTask');
 const task = document.querySelector('#newTask');
 const tbodyTasks = document.querySelector('#tasks');
-const tasksList = [];
 const totalTask = document.querySelector('#totalTasks');
 const taskReady = document.querySelector('#taskReady');
 
-
-
-btnAgregar.addEventListener('keypress', function (e) {
-    if (e.keyCode === 13) {
-        addTask();
-    }
-});
+const tasksList = [
+    {id: 1, name: "entrenar", status: false},
+    {id: 2, name: "regar plantas", status: false},
+    {id: 3, name: "estudiar", status: false}
+];
 
 const addTask = () => {
     if (task.value === '') {
@@ -25,8 +22,10 @@ const addTask = () => {
     };
 
     tasksList.push(newTask);
+
     updateList();
 }
+
 const updateList = () => {
     let html = '', countTaskReady = 0;
     for (let task of tasksList) {
@@ -47,11 +46,13 @@ const updateList = () => {
     totalTask.innerHTML = tasksList.length;
     taskReady.innerHTML = countTaskReady;
 }
+
 const updateStatus = (taskId) => {
     const index = tasksList.findIndex(task => task.id === taskId);
     tasksList[index].status = !tasksList[index].status;
     updateList();
 }
+
 const deleteTask = (taskId) => {
     const confirmation = confirm('¿Está seguro de eliminar la tarea?')
     if (confirmation) {
@@ -60,3 +61,11 @@ const deleteTask = (taskId) => {
         updateList();
     }
 }
+
+btnAgregar.addEventListener('keypress', function (e) {
+    if (e.keyCode === 13) {
+        addTask();
+    }
+});
+
+updateList();
